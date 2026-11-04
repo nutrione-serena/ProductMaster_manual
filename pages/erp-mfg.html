@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP 관리 - 제조라인 등록 | 상품마스터 관리 가이드</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+  .ref-table td, .ref-table th { font-size: 13.5px; }
+  .ref-table ul { margin: 4px 0 4px 16px; padding: 0; }
+  .step ol { font-size: 13.5px; }
+  .step h4.sub { font-size: 15px; margin: 24px 0 8px; color: var(--ink); }
+  .scroll-x { overflow-x: auto; }
+  .scroll-x table { min-width: 760px; table-layout: fixed; }
+  .scroll-x table th { width: auto; white-space: normal; text-align: center; }
+  .scroll-x table td { word-break: keep-all; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span> 상품마스터 관리 가이드</div>
+    <a class="home-link" href="../index.html">← 전체 목록으로</a>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <span class="tag">05. ERP 관리 - 제조라인 등록</span>
+      <h1>제조라인 ERP 등록 방법</h1>
+      <p>자체생산·위탁생산 제조라인이 새로 추가되었습니다. 제조라인은 <b>라인에서 필요한 원재료 · 반제품 · 제품을 빠짐없이 모두</b> ERP에 등록해야 합니다. 매입 상품 등록과 달리 순서와 구성 규칙이 있으니 아래 순서대로 진행하세요.</p>
+      <div class="meta">접속 URL : <a href="https://analytics.nutrione.co.kr/product/erp" target="_blank" rel="noopener">https://analytics.nutrione.co.kr/product/erp</a></div>
+    </div>
+
+    <div class="toc">
+      <b>이 페이지에서 확인할 내용</b>
+      <ol>
+        <li>제조라인 등록의 기본 원칙과 담당(R&amp;R)</li>
+        <li>무엇을 등록해야 하나? (품목자산분류)</li>
+        <li>등록 순서와 품목·바코드 등록 기준</li>
+        <li>매입 등록과 달라지는 입력 규칙</li>
+        <li>단계별 등록 방법</li>
+        <li>등록 예시와 ERP 코드 체계</li>
+        <li>자주 하는 실수</li>
+      </ol>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">1</span> 제조라인 등록의 기본 원칙과 담당(R&amp;R)</h2>
+      <div class="caution"><b>제조라인에서 쓰는 것은 전부 등록합니다.</b> 한 제품을 만드는 데 필요한 <b>원재료 · 반제품 · 부자재(생산) · 제품</b>이 하나라도 ERP에 없으면 BOM 등록을 할 수 없습니다. 제품만 등록하고 끝내지 마세요.</div>
+      <ul>
+        <li>제조라인 등록은 ERP 등록 화면에서 <b>생산유형을 [자체생산] 또는 [위탁생산]</b>으로 선택하면 시작됩니다. 자체생산과 위탁생산은 <b>동일한 구조</b>입니다.</li>
+        <li><b>담당(R&amp;R)</b> : 제조 기반 BOM 등록과 관련된 바코드, ERP는 <b>모두 상품본부에서 주관해 등록</b>합니다. (영업 담당자가 직접 요청하는 매입 상품 등록과 다릅니다.)</li>
+        <li>제조라인 관련 반제품·원료·부자재 바코드는 <b>임의로 생성해도 무관</b>하지만, WMS 등록 등 구분을 위해 <b>중복은 불가</b>합니다.</li>
+        <li>일반 매입 상품과 마찬가지로 <b>동일 서비스에 같은 바코드·수량 구성은 중복 등록할 수 없고</b>, ERP번호 1개는 하나의 출고 구조로 고정됩니다.</li>
+      </ul>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_form_mfg.png" alt="ERP 등록 요청 - 자체생산">
+        <div class="cap"><span>생산유형을 <b>자체생산 또는 위탁생산</b>으로 선택하면 제품·반제품·원자재·부자재(생산)만 선택할 수 있고, 상품 계열은 회색(비활성)이 됩니다.</span></div>
+      </div>
+      <div class="tip"><b>Tip.</b> 제조라인의 <b>BOM 구성과 확인은 상품마스터가 아니라 ERP에서</b> 합니다. 상품마스터에서는 BOM에 쓸 원료·반제품·부자재·제품의 바코드와 ERP번호를 등록하는 역할까지만 합니다.</div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">2</span> 무엇을 등록해야 하나? (품목자산분류)</h2>
+      <p>제조라인에서는 아래 4가지 분류를 사용합니다.</p>
+      <table class="ref-table">
+        <tr><th>원자재 (원재료)</th><td>자체생산 또는 위탁생산에 들어가는 <b>원료</b>입니다.</td></tr>
+        <tr><th>반제품</th><td>BOM 등록 시 필요한 <b>배합 / 충진 단계의 제품</b>입니다. 한 단계만이 아니라 <b>BOM 등록에 필요한 단계를 모두</b> 등록해야 합니다.</td></tr>
+        <tr><th>제품</th><td>자체생산 또는 위탁생산으로 만들어지는 <b>완제품</b>입니다.</td></tr>
+        <tr><th>부자재(생산)</th><td>생산에 쓰는 단케이스 등 <b>포장 및 부자재</b>입니다.</td></tr>
+      </table>
+      <div class="warn"><b>충진 반제품은 구성 비율을 꼭 등록합니다.</b> 반제품 중 충진은 충진 구성에 따른 <b>구성 비율</b>을 반드시 등록해야 합니다(합계 10).</div>
+      <div class="tip"><b>말머리로 구분하세요.</b> 바코드·상품명을 한눈에 구분하고 관리하기 쉽도록 <b>말머리</b>를 붙여 기재합니다.
+        <ul>
+          <li>반제품: <b>[배합]</b> / <b>[충진]</b></li>
+          <li>원료: <b>[제조원료]</b> (자체 제조용) / <b>[위탁원료]</b> (위탁 제조용)</li>
+          <li>원료는 제조든 위탁이든 품목자산분류가 <b>원자재</b>(ERP번호 <b>RM</b>으로 시작)로 같고, <b>제조인지 위탁인지는 상품명 말머리로만</b> 구분합니다.</li>
+          <li>부자재(생산): <b>[제조]</b></li>
+        </ul>
+      </div>
+      <div class="warn"><b>구분 주의.</b> <b>부자재(생산)</b>는 제조라인용 부자재이고, 매입용 <b>부자재 / 부자재(상품)</b>와는 다릅니다. 생산유형이 자체·위탁생산이면 매입용 분류는 선택할 수 없습니다.</div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">3</span> 등록 순서와 품목·바코드 등록 기준</h2>
+      <p>제조라인 품목은 먼저 <b>바코드를 준비</b>한 뒤 ERP로 등록합니다. 분류별로 품목·바코드를 준비하는 방법이 다릅니다.</p>
+      <div class="flow">
+        <span class="node">0. 품목·바코드 준비</span><span class="arrow">→</span>
+        <span class="node">1. 원자재</span><span class="arrow">→</span>
+        <span class="node">2. 부자재(생산)</span><span class="arrow">→</span>
+        <span class="node">3. 반제품(충진)</span><span class="arrow">→</span>
+        <span class="node">4. 반제품(배합)</span><span class="arrow">→</span>
+        <span class="node now">5. 제품</span>
+      </div>
+      <table class="ref-table">
+        <tr><th>제품 (완제품)</th><td><b>품목 · 바코드 · ERP를 세트로</b> 등록합니다. 반드시 <b>실제 출고를 위한 정확한 정보</b>를 등록해야 합니다.</td></tr>
+        <tr><th>반제품 (충진 · 배합)<br>부자재(생산)</th><td>
+          <ul>
+            <li><b>품목관리는 필요하지 않습니다.</b> 상품본부 제조라인 관련 품목 <b>1100808 하위로 바코드만 등록</b>한 뒤 ERP번호를 생성합니다.</li>
+            <li>바코드 구분을 위해 상품명 말머리에 반제품은 <b>[충진] / [배합]</b>, 부자재는 <b>[제조]</b>를 표기합니다.</li>
+            <li>바코드를 임의로 등록할 때는 <b>제품 바코드 기준 뒤에 -1, -2 …</b>를 붙이는 방식(유관 바코드 규칙)으로 생성합니다.</li>
+          </ul></td></tr>
+        <tr><th>원료</th><td>
+          <ul>
+            <li>구매팀이 만든 원료를 <b>동일하게 제조에 쓰는 경우</b>, 이미 <b>[제조원료] 바코드가 있으면 그 바코드를 사용</b>합니다.</li>
+            <li>[제조원료] 바코드가 <b>없으면</b> 기존 바코드 뒤에 <b>-1</b>을 붙이고 말머리 <b>[제조원료]</b>를 표기해 생성한 뒤 사용합니다.</li>
+            <li><b>제조만을 위한 원료</b>라면 품목, 바코드를 등록한 뒤 사용합니다.</li>
+          </ul></td></tr>
+      </table>
+      <div class="tip"><b>Tip.</b> 제조라인에 들어가는 품목 목록(원재료 / 반제품 / 부자재 / 제품)을 먼저 표로 정리한 뒤 등록하면 빠뜨리는 일이 없습니다. 충진 단계가 없는 제품이라면 3번은 건너뜁니다.</div>
+      <div class="warn"><b>바코드는 중복 불가.</b> 임의로 만들어도 되지만, WMS 등록 등 구분을 위해 같은 번호를 두 번 쓸 수 없습니다. 등록 전에 [중복확인]을 꼭 하세요.</div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">4</span> 매입 등록과 달라지는 입력 규칙</h2>
+      <table class="ref-table">
+        <tr><th>생산유형</th><td>[자체생산] 또는 [위탁생산]을 선택합니다. 매입이 기본값이므로 <b>반드시 직접 바꿔야</b> 합니다.</td></tr>
+        <tr><th>서비스</th><td><b>뉴트리원-일반, 딥런-일반</b>만 선택할 수 있습니다. 홈쇼핑·딥런·제휴 서비스는 제조라인에서는 비활성입니다.</td></tr>
+        <tr><th>품목자산분류</th><td>제품 / 반제품 / 원자재 / 부자재(생산) 중 선택합니다. 자체·위탁생산을 선택하면 기본값은 <b>제품</b>입니다.</td></tr>
+        <tr><th>반제품 구분</th><td>품목자산분류가 <b>반제품</b>일 때만 나타납니다(그 외에는 숨김). 기본값은 <b>배합</b>이며, <b>배합 / 충진</b> 중 선택합니다.</td></tr>
+        <tr><th>반제품 구성</th><td>반제품 + <b>충진</b>을 선택했을 때만 나타납니다. 충진에 들어가는 구성 품목의 바코드를 [검색]으로 고르고 <b>배합 비율</b>을 입력합니다.</td></tr>
+        <tr><th>품목 수량·원가율</th><td>제품, 반제품, 원자재, 부자재(생산)는 <b>수량이 1로 고정</b>(수정 불가)이고 <b>원가율은 100</b>입니다. 즉 제조라인 품목은 1개 바코드만 등록하는 것이 기본입니다.</td></tr>
+        <tr><th>입고단가</th><td>반제품은 이 항목이 <b>숨겨집니다</b>(입력 불필요). 원자재·제품·부자재(생산)는 필수 입력입니다.</td></tr>
+        <tr><th>상품명+수량</th><td>모든 분류가 <b>선택한 바코드번호의 상품명 기준으로 자동 조합</b>되며 <b>수정할 수 있습니다.</b> (자동 조합 방식은 추후 변경될 예정이므로 입력된 값을 확인한 뒤 필요하면 고치세요.)</td></tr>
+      </table>
+      <div class="warn"><b>배합 비율 입력 규칙 (충진).</b>
+        <ul>
+          <li>각 비율은 <b>0~10 사이의 숫자</b>만 입력할 수 있습니다. 칸을 비워 두면 저장되지 않습니다.</li>
+          <li>구성한 모든 항목의 <b>비율 합계가 반드시 10</b>이 되어야 합니다. 합이 10이 아니면 "반제품 배합 비율은 0~10까지 입력할 수 있으며, 전체 배합비율의 합계가 10이 되도록 입력해 주세요"라는 안내가 나옵니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">5</span> 단계별 등록 방법</h2>
+      <p>모든 단계에서 <b>[상품마스터] → [ERP관리] → [생성요청]</b>으로 시작하며, 공통 입력은 <a href="erp.html">ERP 관리 - 등록</a>의 기준과 같습니다.</p>
+
+      <h4 class="sub">5-1. 원자재(원재료) 등록</h4>
+      <ol>
+        <li>생산유형 <b>자체생산</b>(또는 위탁생산) 선택 → 서비스 선택</li>
+        <li>품목자산분류 <b>원자재</b> 선택</li>
+        <li>품목의 <b>[검색]</b> 클릭 → 바코드 검색 팝업에서 [제조원료] 또는 [위탁원료] 바코드 선택 (수량 1 고정)</li>
+        <li>브랜드·매출카테고리·상품명+수량 확인, <b>입고단가</b> 입력(바코드 단가가 있으면 자동 입력)</li>
+        <li>[생성요청] 클릭 → 안내 메일 확인 후 발송</li>
+      </ol>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_mfg_material.png" alt="원자재 ERP 등록 화면">
+        <div class="cap"><span>원자재를 선택한 ERP 등록 화면 예시입니다.</span></div>
+      </div>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_barcode_search_popup.png" alt="바코드 검색 팝업">
+        <div class="cap"><span>바코드 검색 팝업입니다. 사용중단·미사용 품목은 선택할 수 없습니다.</span></div>
+      </div>
+
+      <h4 class="sub">5-2. 부자재(생산) 등록</h4>
+      <p>원자재와 같은 방법으로, 품목자산분류만 <b>부자재(생산)</b>으로 선택합니다. 상품명 말머리는 <b>[제조]</b>로 구분하고, 단케이스 등 포장·부자재를 모두 등록하세요.</p>
+
+      <h4 class="sub">5-3. 반제품 - 충진 등록</h4>
+      <ol>
+        <li>품목자산분류 <b>반제품</b> 선택 → 반제품 구분 <b>충진</b> 선택 (→ <b>반제품 구성</b> 영역이 나타남)</li>
+        <li>품목 [검색]으로 충진 반제품의 바코드([충진] 말머리) 선택</li>
+        <li>반제품 구성에서 [검색]으로 <b>충진에 들어가는 구성 품목의 바코드</b>를 고르고, 각 <b>배합 비율</b>을 입력 ([추가]로 행 늘리기, [삭제]로 행 줄이기)</li>
+        <li>비율 합계가 <b>10</b>인지 확인</li>
+        <li>상품명+수량을 확인하고 필요하면 수정 → [생성요청]</li>
+      </ol>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_mfg_semi_fill.png" alt="반제품 충진 ERP 등록 화면">
+        <div class="cap"><span>반제품(충진) 선택 시 반제품 구성 영역이 함께 나타납니다.</span></div>
+      </div>
+
+      <h4 class="sub">5-4. 반제품 - 배합 등록</h4>
+      <ol>
+        <li>품목자산분류 <b>반제품</b> 선택 → 반제품 구분 <b>배합</b>(기본값) 확인</li>
+        <li>품목 [검색]으로 배합 반제품의 바코드([배합] 말머리) 선택 (수량 1 고정)</li>
+        <li>상품명+수량이 바코드 상품명 기준으로 입력되는지 확인</li>
+        <li>입고단가는 숨겨져 있으므로 입력하지 않습니다. [생성요청]</li>
+      </ol>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_mfg_semi_blend.png" alt="반제품 배합 ERP 등록 화면">
+        <div class="cap"><span>반제품(배합) 선택 시 화면입니다.</span></div>
+      </div>
+
+      <h4 class="sub">5-5. 제품 등록</h4>
+      <ol>
+        <li>품목자산분류 <b>제품</b> 선택</li>
+        <li>품목 [검색]으로 완제품(실제 출고 바코드) 선택 (수량 1 고정, 원가율 100)</li>
+        <li>브랜드·매출카테고리 확인, <b>입고단가</b> 입력</li>
+        <li>[생성요청]</li>
+      </ol>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_mfg_product.png" alt="제품 ERP 등록 화면">
+        <div class="cap"><span>제품 선택 시 화면입니다.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">6</span> 등록 예시와 ERP 코드 체계</h2>
+      <p>예) 제품 <b>올리브 레몬 듀얼샷 프레쉬(중국, 10포)</b>를 만드는 제조라인. 제품 바코드를 기준으로 충진·배합 반제품, 원료, 부자재의 바코드와 ERP번호를 아래처럼 만듭니다.</p>
+      <div class="scroll-x">
+      <table class="ref-table"><colgroup><col style="width:11%"><col style="width:25%"><col style="width:13%"><col style="width:14%"><col style="width:9%"><col style="width:28%"></colgroup>
+        <tr><th>구분</th><th>품명</th><th>ERP번호</th><th>바코드번호</th><th>품목번호</th><th>등록 안내</th></tr>
+        <tr><td><b>제품</b></td><td>올리브 레몬 듀얼샷 프레쉬(중국, 10포)</td><td>FINT000001</td><td>8809948529190</td><td>1100784</td><td>실제 판매 상품 바코드로 생성</td></tr>
+        <tr><td>반제품(충진)</td><td>[충진]올리브 레몬 듀얼샷 프레쉬 20g (올리브4, 레몬6)</td><td>FL000001</td><td>8809948529190-1</td><td>1100808</td><td>품목 관리 불필요. 상품본부 제조 관련 품목 1100808 하위로 <b>바코드만</b> 생성</td></tr>
+        <tr><td>반제품(배합)</td><td>[배합]키오코리아_유기농 레몬 주스(이탈리아산)</td><td>MX000001</td><td>8809948529190-2</td><td>1100808</td><td>상동 (1100808 하위 바코드만 생성)</td></tr>
+        <tr><td>원료(제조)</td><td>[제조원료]올리브오일 (OCENA)_200kg 드럼용, 1</td><td>RM000001</td><td>200914-1</td><td>1600025</td><td>동일 원료 품번 하위로 <b>제조용 바코드</b> 생성</td></tr>
+        <tr><td>원료(제조)</td><td>[제조원료]키오코리아_유기농 레몬 주스(이탈리아산), 1</td><td>RM000002</td><td>200918-1</td><td>1600026</td><td>동일 원료 품번 하위로 제조용 바코드 생성</td></tr>
+        <tr><td>원료(위탁)</td><td>[위탁원료]올리브오일 (OCENA), 1 외 6건 (위탁원료)</td><td>RM000003 ~ RM000009</td><td>200815-1 등</td><td>1600013 등</td><td>동일 원료 품번 하위로 <b>위탁용 바코드</b> 생성</td></tr>
+        <tr><td>부자재(생산)</td><td>레몬듀얼샷 프레쉬 호일 / 단케이스 / 카톤</td><td>SB000564 ~ SB000566</td><td>123464 ~ 123466</td><td>1600001</td><td>동일 원료(부자재) 품번 내 바코드 생성</td></tr>
+      </table>
+      </div>
+      <div class="tip"><b>바코드 규칙 요약.</b> 제품 바코드 8809948529190을 기준으로 반제품은 <b>-1, -2 …</b>를 순서대로 붙이고, 원료는 기존 원료 바코드 뒤에 <b>-1</b>을 붙여 말머리([제조원료]/[위탁원료])와 함께 등록합니다. 다음 제품(올리브 블러드오렌지 듀얼샷, 8809948527820-5)도 같은 방식으로 <b>-5-1, -5-2 …</b> 순서로 만듭니다.</div>
+
+      <p style="margin-top:18px"><b>ERP 코드(ERP번호) 생성 규칙</b></p>
+      <div class="scroll-x">
+      <table class="ref-table"><colgroup><col style="width:16%"><col style="width:17%"><col style="width:13%"><col style="width:13%"><col style="width:23%"><col style="width:18%"></colgroup>
+        <tr><th>생산유형</th><th>품목자산분류</th><th>품목구성</th><th>반제품구분</th><th>규칙</th><th>예) ERP코드</th></tr>
+        <tr><td>자체생산</td><td><b>제품</b></td><td>품목 1개</td><td>무관</td><td>FINT + 숫자 6자리</td><td>FINT000001</td></tr>
+        <tr><td>위탁생산</td><td><b>제품</b></td><td>품목 1개</td><td>무관</td><td>FONT + 숫자 6자리</td><td>FONT000001</td></tr>
+        <tr><td>자체·위탁생산</td><td><b>반제품</b></td><td>무관</td><td>배합</td><td>MX + 숫자 6자리</td><td>MX000001</td></tr>
+        <tr><td>자체·위탁생산</td><td><b>반제품</b></td><td>무관</td><td>충진</td><td>FL + 숫자 6자리</td><td>FL000001</td></tr>
+        <tr><td>자체·위탁생산</td><td><b>원자재</b></td><td>무관</td><td>무관</td><td>RM + 숫자 6자리</td><td>RM000001</td></tr>
+        <tr><td>자체·위탁생산</td><td><b>부자재(생산)</b></td><td>무관</td><td>무관</td><td>SB0 + 숫자 5자</td><td>SB000564</td></tr>
+      </table>
+      </div>
+      <p style="margin-top:18px"><b>매입 상품의 ERP 코드 규칙</b></p>
+        <div class="scroll-x">
+        <table class="ref-table"><colgroup><col style="width:14%"><col style="width:32%"><col style="width:16%"><col style="width:22%"><col style="width:16%"></colgroup>
+          <tr><th>생산유형</th><th>품목자산분류</th><th>품목구성</th><th>규칙</th><th>예) ERP코드</th></tr>
+          <tr><td>매입</td><td>부자재 / 부자재(상품) / 판매촉진</td><td>무관</td><td>SB0 + 숫자 5자</td><td>SB000045</td></tr>
+          <tr><td>매입</td><td>상품, 묶음상품</td><td>품목 1개</td><td>NT0 + 숫자 5자</td><td>NT073335</td></tr>
+          <tr><td>매입</td><td>묶음상품</td><td>품목 2개 이상</td><td>NT5 + 숫자 5개</td><td>NT507335</td></tr>
+          <tr><td>매입</td><td>상품, 묶음상품</td><td>무관</td><td>HS0 + 숫자 5개</td><td>HS003355</td></tr>
+          <tr><td>매입</td><td>상품, 묶음상품</td><td>무관</td><td>ND0 + 숫자 5개</td><td>ND000001</td></tr>
+          <tr><td>매입</td><td>묶음상품 외</td><td>품목 1개</td><td>DP0 + 숫자 5개</td><td>DP000001</td></tr>
+          <tr><td>매입</td><td>묶음상품</td><td>품목 2개 이상</td><td>DP5 + 숫자 5개</td><td>DP500001</td></tr>
+          <tr><td>매입</td><td>무관</td><td>무관</td><td>HP0 + 숫자 5개</td><td>HP000001</td></tr>
+        </table>
+        </div>
+      
+      <div class="tip"><b>Tip.</b> ERP번호는 위 규칙에 따라 <b>자동 생성</b>됩니다. 접두어(FINT, FONT, MX, FL, RM, SB)를 보면 어떤 분류의 ERP인지 바로 알 수 있습니다.</div>
+    </div>
+
+    <div class="section-title">자주 하는 실수 체크리스트</div>
+    <div class="faq-box">
+      <div class="q">Q. 품목자산분류에서 제품·반제품이 회색이라 선택이 안 돼요.</div>
+      <div class="a">생산유형이 기본값 <b>매입</b>으로 남아 있기 때문입니다. [자체생산] 또는 [위탁생산]으로 바꾸면 제품/반제품/원자재/부자재(생산)가 활성화됩니다.</div>
+      <div class="q">Q. 서비스를 홈쇼핑으로 선택하고 싶은데 비활성이에요.</div>
+      <div class="a">자체·위탁생산(제조라인)은 뉴트리원-일반, 딥런-일반만 선택할 수 있습니다.</div>
+      <div class="q">Q. 반제품 구성이 안 보여요.</div>
+      <div class="a">반제품 구성은 품목자산분류가 <b>반제품</b>이고 반제품 구분이 <b>충진</b>일 때만 나옵니다. 배합일 때는 나오지 않습니다.</div>
+      <div class="q">Q. 배합 비율을 입력했는데 저장이 안 돼요.</div>
+      <div class="a">비율 합계가 정확히 10인지, 각 값이 0~10인지, 빈 칸이 없는지 확인하세요.</div>
+      <div class="q">Q. 반제품에서 입고단가 입력란이 없어요.</div>
+      <div class="a">반제품은 입고단가가 숨겨지는 것이 정상입니다. 원자재·제품·부자재(생산)에는 입력란이 있습니다.</div>
+      <div class="q">Q. 제품은 등록했는데 제조라인이 구성되지 않아요.</div>
+      <div class="a">제조라인(BOM) 구성은 상품마스터가 아니라 <b>ERP의 BOM에서</b> 하는 별개 작업입니다. 제조라인 구성 및 확인은 ERP에서 진행하세요. 상품마스터에서는 BOM에 쓸 원료·반제품·부자재(생산)·제품이 모두 등록되어 있는지만 확인하면 됩니다.</div>
+      <div class="q">Q. 수량을 2로 입력하고 싶어요.</div>
+      <div class="a">제품·반제품·원자재·부자재(생산)는 수량 1로 고정됩니다. 묶음 구성이 필요한 경우는 매입용 묶음상품 등록을 사용하세요.</div>
+      <div class="q">Q. 바코드를 잘못 만들었어요. 삭제할 수 있나요?</div>
+      <div class="a">ERP와 연관될 수 있어 삭제 기능은 제공하지 않습니다. 삭제가 필요하면 IT솔루션팀에 문의하세요.</div>
+    </div>
+
+    <div class="footer-nav">
+      <a href="erp.html">← 이전 : ERP 관리 - 등록</a>
+      <a href="erp-approve.html">다음 : ERP 승인·파일 다운 →</a>
+    </div>
+  </div>
+</body>
+</html>

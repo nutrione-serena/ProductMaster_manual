@@ -1,0 +1,98 @@
+﻿$ErrorActionPreference = 'Stop'
+Set-Location -Path $PSScriptRoot
+
+Write-Host "============================================"
+Write-Host "  Manual - GitHub Update"
+Write-Host "============================================"
+Write-Host ""
+
+try {
+    git rev-parse --is-inside-work-tree | Out-Null
+} catch {
+    Write-Host "[ERROR] This folder is not a git repository."
+    Read-Host "Press Enter to exit"
+    exit 1
+}
+
+Write-Host "Checking for changed files..."
+git add -A | Out-Null
+
+$staged = git diff --cached --name-only
+if (-not $staged) {
+    Write-Host ""
+    Write-Host "No changes detected. Nothing to update."
+    Write-Host ""
+    Read-Host "Press Enter to exit"
+    exit 0
+}
+
+Write-Host ""
+Write-Host "Changed files:"
+git diff --cached --name-status
+Write-Host ""
+
+# Stamp today's date into index.html's "최종 업데이트" line, only when there's
+# an actual change to publish (so the date reflects the last real git update,
+# not just whichever day someone happened to run this script).
+$today = Get-Date -Format 'yyyy-MM-dd'
+$indexPath = Join-Path $PSScriptRoot 'index.html'
+if (Test-Path $indexPath) {
+    $content = Get-Content -Raw -Encoding UTF8 $indexPath
+    $updated = $content -replace '(최종\s*업데이트\s*:\s*)\d{4}-\d{2}-\d{2}', ('${1}' + $today)
+    if ($updated -ne $content) {
+        [System.IO.File]::WriteAllText($indexPath, $updated, (New-Object System.Text.UTF8Encoding($false)))
+        git add -- $indexPath | Out-Null
+        Write-Host "Stamped index.html '최종 업데이트' date: $today"
+        Write-Host ""
+    }
+}
+
+# Version bump: ask whether this change is a feature change (vs. a simple wording fix).
+# Feature change -> minor version up (v1.0 -> v1.1). Wording-only -> version unchanged.
+if (Test-Path $indexPath) {
+    $verAns = Read-Host "Feature change? Bump version (y/N)"
+    if ($verAns -match '^[yY]') {
+        $content = Get-Content -Raw -Encoding UTF8 $indexPath
+        $m = [regex]::Match($content, 'v(\d+)\.(\d+)')
+        if ($m.Success) {
+            $newVer = 'v' + $m.Groups[1].Value + '.' + ([int]$m.Groups[2].Value + 1)
+            $updated = $content.Substring(0, $m.Index) + $newVer + $content.Substring($m.Index + $m.Length)
+            [System.IO.File]::WriteAllText($indexPath, $updated, (New-Object System.Text.UTF8Encoding($false)))
+            git add -- $indexPath | Out-Null
+            Write-Host "Version bumped: $($m.Value) -> $newVer"
+            Write-Host ""
+        }
+    }
+}
+
+$commitmsg = Read-Host "Commit message (press Enter for default)"
+if ([string]::IsNullOrWhiteSpace($commitmsg)) {
+    $commitmsg = "Update manual $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+}
+
+git commit -m $commitmsg
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[ERROR] Commit failed."
+    Read-Host "Press Enter to exit"
+    exit 1
+}
+
+Write-Host ""
+Write-Host "Pushing to GitHub..."
+git push
+if ($LASTEXITCODE -ne 0) {
+    Write-Host ""
+    Write-Host "[ERROR] Push failed. Check your internet connection or GitHub login."
+    Read-Host "Press Enter to exit"
+    exit 1
+}
+
+Write-Host ""
+Write-Host "============================================"
+Write-Host "  Done! Changes are on GitHub."
+$remote = (git remote get-url origin) 2>$null
+if ($remote -match "github\.com[:/]([^/]+)/([^/]+?)(\.git)?$") { Write-Host "  https://$($Matches[1]).github.io/$($Matches[2])/" }
+Write-Host "  (the live page may take 1-2 minutes to update)"
+Write-Host "============================================"
+Write-Host ""
+Read-Host "Press Enter to exit"

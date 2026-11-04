@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP 관리 - 등록 | 상품마스터 관리 가이드</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+  .ref-table td, .ref-table th { font-size: 13.5px; }
+  .ref-table ul { margin: 4px 0 4px 16px; padding: 0; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span> 상품마스터 관리 가이드</div>
+    <a class="home-link" href="../index.html">← 전체 목록으로</a>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <span class="tag">04. ERP 관리 - 등록</span>
+      <h1>ERP 관리 화면 사용법 (등록 · 항목별 기준)</h1>
+      <p>바코드를 조합해 ERP 번호(출고 구조)를 만드는 화면입니다. 이 페이지는 <b>공통 규칙과 매입 상품 등록</b>을 설명하고, 자체생산·위탁생산 제조라인은 <a href="erp-mfg.html" style="color:#7be0cb;text-decoration:underline">다음 페이지</a>에서 이어집니다.</p>
+      <div class="meta">접속 URL : <a href="https://analytics.nutrione.co.kr/product/erp" target="_blank" rel="noopener">https://analytics.nutrione.co.kr/product/erp</a></div>
+    </div>
+
+    <div class="toc">
+      <b>이 페이지에서 확인할 내용</b>
+      <ol>
+        <li>ERP 목록과 검색 조건</li>
+        <li>생성 단계(상태)와 권한</li>
+        <li>등록 화면 열기와 기본 선택값</li>
+        <li>묶음상품 자동 계산 기준 (정책)</li>
+        <li>저장 · 생성요청 시 안내 참고 사항</li>
+        <li>자주 하는 실수</li>
+      </ol>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">1</span> ERP 목록과 검색 조건</h2>
+      <p><b>[상품마스터] → [ERP관리]</b>에서 목록을 확인합니다. 선택한 조건을 모두 만족하는 ERP만 보여줍니다.</p>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_list.png" alt="ERP관리 목록">
+        <div class="cap"><span>생산유형 / 서비스 / 품목자산분류 / 상태 / 검색어(ERP번호·바코드·사방넷 품번) 등으로 검색합니다.</span></div>
+      </div>
+      <table>
+        <tr><th>생산유형</th><td><b>자체생산</b>: 뉴풀필 등 자사에서 제조하는 상품 / <b>위탁생산</b>: 원료를 전달한 뒤 제조사가 생산하는 상품 / <b>매입</b>: 제조사에서 완제품으로 입고되는 상품</td></tr>
+        <tr><th>서비스</th><td>뉴트리원-일반, 뉴트리원-홈쇼핑, 뉴트리원-딥런, 뉴트리원-제휴, 딥런-일반, 딥런-홈쇼핑 (기준표는 아래 3번 참고)</td></tr>
+        <tr><th>품목자산분류</th><td>상품, 묶음상품, 부자재, 부자재(상품), 판매촉진구매, 제품, 반제품, 원자재, 부자재(생산)</td></tr>
+        <tr><th>상태</th><td>생성요청 / 생성중 / 사용 / 미사용 / 사용중단 / 전표처리용</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">2</span> 생성 단계(상태)와 권한</h2>
+      <div class="flow">
+        <span class="node">생성요청<br><small>각 영업 담당자</small></span><span class="arrow">→</span>
+        <span class="node">생성중<br><small>영업관리팀 확인</small></span><span class="arrow">→</span>
+        <span class="node now">사용<br><small>ERP 생성 완료</small></span>
+      </div>
+      <p>목록 우측 위 <b>[생성요청]</b> 버튼으로 새 ERP 생성을 요청합니다. 요청하면 담당자에게 안내 메일이 자동 작성되며(발송 여부는 직접 선택), 담당자가 구성을 확인한 뒤 ERP를 최종 생성합니다.</p>
+      <div class="warn"><b>생성중 상태에서는 수정할 수 없습니다.</b> 수정이 필요하면 <b>영업관리팀에 문의</b>하세요.</div>
+      <div class="caution"><b>중복·분리 불가 주의.</b>
+        <ul>
+          <li>같은 서비스에서 <b>동일한 바코드 구성(바코드+수량)</b>은 중복 생성요청이 안 됩니다. 단 <b>[뉴트리원-제휴]</b>는 중복 체크 없이 등록할 수 있습니다.</li>
+          <li><b>ERP 번호 1개는 하나의 출고 구조</b>로 고정됩니다. 바코드 A의 1개입 / 2개입 / 3개입을 하나의 ERP 번호로 함께 등록하면 출고·재고·주문 처리 때 분리해 운영할 수 없습니다. <b>수량별 구성은 반드시 개별 ERP 번호로 생성</b>하세요.</li>
+        </ul>
+      </div>
+      <table>
+        <tr><th>승인여부 N 권한자<br>(일반 영업 담당자)</th><td>등록하면 무조건 <b>생성요청</b> 단계로 들어갑니다. 상태·ERP번호·사방넷 품번코드는 처음에 보이지 않습니다.</td></tr>
+        <tr><th>승인여부 Y 권한자<br>(승인 권한자)</th><td>생성요청 단계 없이 바로 값을 골라 등록합니다. 상태 기본값은 <b>사용</b>이며, ERP번호·사방넷 품번코드도 입력할 수 있습니다.</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">3</span> 등록 화면 열기와 기본 선택값</h2>
+      <p><b>[생성요청]</b>을 누르면 ERP 등록 요청 창이 열립니다. 생산유형을 고르면 선택 가능한 서비스와 품목자산분류가 자동으로 바뀝니다.</p>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/erp_form_purchase.png" alt="ERP 등록 요청 - 매입">
+        <div class="cap"><span>생산유형이 <b>매입</b>이면 상품·묶음상품·부자재·부자재(상품)·판매촉진구매만 선택할 수 있습니다. 제품·반제품·원자재·부자재(생산)는 회색(비활성)입니다.</span></div>
+      </div>
+      <table class="ref-table">
+        <tr><th>생산유형</th><td>기본값 <b>매입</b>. 생산유형에 따라 품목자산분류가 활성/비활성으로 바뀝니다.<ul><li>매입 = 상품, 묶음상품, 부자재, 부자재(상품), 판매촉진구매 활성</li><li>자체생산/위탁생산 = 제품, 반제품, 원자재, 부자재(생산) 활성 → <a href="erp-mfg.html">제조라인 등록</a></li></ul></td></tr>
+        <tr><th>서비스</th><td>기본값 뉴트리원-일반. 매입은 모든 서비스를 선택할 수 있고, <b>자체생산·위탁생산은 뉴트리원-일반, 딥런-일반만</b> 선택할 수 있습니다.</td></tr>
+      </table>
+      <div class="warn"><b>제품 · 반제품 · 원자재 · 부자재(생산)는 제조 전용입니다.</b> 이 4개 분류는 <b>생산유형이 자체생산 또는 위탁생산일 때만 활성화</b>됩니다. 매입에서는 선택할 수 없습니다.</div>
+      <p style="margin-top:14px"><b>서비스 선택 기준</b></p>
+      <table class="ref-table">
+        <tr><th>뉴트리원-일반</th><td>뉴트리원 제품이며, 홈쇼핑 외 판매인 경우</td></tr>
+        <tr><th>뉴트리원-홈쇼핑</th><td>뉴트리원 제품이며, 홈쇼핑 판매인 경우</td></tr>
+        <tr><th>뉴트리원-딥런</th><td>딥런 제품이며, 뉴트리원에 판매 거래되는 경우</td></tr>
+        <tr><th>뉴트리원-제휴</th><td>뉴트리원 제품이며, 일반 고객용이 아닌 별도 출고 구성품일 경우</td></tr>
+        <tr><th>딥런-일반</th><td>딥런 제품이며, 딥런 법인 기준 홈쇼핑 외 판매인 경우</td></tr>
+        <tr><th>딥런-홈쇼핑</th><td>딥런 제품이며, 딥런 법인 기준 홈쇼핑 판매인 경우</td></tr>
+      </table>
+      <p style="margin-top:14px"><b>품목자산분류 선택 기준</b></p>
+      <table class="ref-table">
+        <tr><th>상품</th><td>바코드 기준 품목 1개이고 수량이 1개인 경우</td></tr>
+        <tr><th>묶음상품</th><td>바코드 기준 품목 1개이고 수량이 2개 이상이거나, 품목이 2개 이상인 경우</td></tr>
+        <tr><th>부자재</th><td>상품이 아닌 원가 배분 없는 쇼핑백 등의 경우</td></tr>
+        <tr><th>부자재(상품)</th><td>상품이 아니지만 상품에 포함되는 케이스, 제관, 원료의 경우</td></tr>
+        <tr><th>판매촉진구매</th><td>내부에서 구매하는 프로모션 증정용 품목, 외부 사입 증정품(예: 초콜릿, 파우치 등)</td></tr>
+        <tr><th>제품</th><td>자체생산 또는 위탁생산 <b>완제품</b></td></tr>
+        <tr><th>반제품</th><td>자체생산·위탁생산 시 BOM 등록 시 <b>배합 혹은 충진 단계 제품</b></td></tr>
+        <tr><th>원자재</th><td>자체생산·위탁생산 시 <b>원료</b></td></tr>
+        <tr><th>부자재(생산)</th><td>자체생산·위탁생산 시 사용되는 단케이스 등 <b>포장 및 부자재</b></td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">4</span> 묶음상품 자동 계산 기준 (정책)</h2>
+      <p>일반 입력 항목은 화면 안내를 따르면 되고, 아래는 <b>묶음상품의 원가율 · 브랜드 · 매출카테고리가 자동으로 계산되는 정책</b>입니다. 값이 이상하면 이 기준으로 확인하세요.</p>
+      <table class="ref-table">
+        <tr><th>원가율</th><td>
+          <ul>
+            <li>묶음상품 외 분류는 무조건 <b>100</b>입니다(수정 불가).</li>
+            <li>묶음상품에 상품이 없고 그 외 분류만으로 구성: 100을 품목 개수로 나눠 합계를 100으로 맞춥니다.</li>
+            <li>상품 품목이 1개: 상품 외 품목은 무조건 0, 나머지 상품 품목에 100.</li>
+            <li>상품 품목이 2개 이상: 상품 외 분류는 원가가 있어도 0으로 계산 / 상품 분류는 MOQ 중 가장 높은 가격 기준의 (원가 × 수량) 합계 대비 비중으로 계산 / 1% 미만이면 0이 아닌 <b>1</b>로 출력.</li>
+            <li>묶음상품의 원가율은 승인여부 Y 권한자만 수정할 수 있습니다.</li>
+          </ul></td></tr>
+        <tr><th>브랜드</th><td>
+          <ul>
+            <li>부자재·부자재(상품)·판매촉진으로만 구성: <b>기타</b></li>
+            <li>그 외 1개 품목: 해당 품목의 브랜드</li>
+            <li>2개 이상 품목: 모든 브랜드가 같으면 그 브랜드 / 다르면 동일 브랜드 합산 원가 비율이 <b>75% 이상</b>인 브랜드, 없으면 <b>복합</b></li>
+            <li>엠디스픽, 엠디스픽 드바리스타, 테카테카, 올랄라는 모두 <b>1개의 브랜드로 인식</b>해 계산합니다.</li>
+          </ul></td></tr>
+        <tr><th>매출카테고리</th><td>같은 방식으로, 모든 품목이 동일하면 그 카테고리 / 합산 원가 비율 75% 이상인 카테고리 / 없으면 <b>기타</b></td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">5</span> 저장 · 생성요청 시 안내 참고 사항</h2>
+      <p>저장하거나 생성요청할 때 조건에 맞지 않으면 아래 안내 문구가 나옵니다. 문구를 읽고 안내대로 수정하세요.</p>
+      <table class="ref-table">
+        <tr><th>조건</th><th>안내 문구</th></tr>
+        <tr><td>선택한 바코드에 <b>사용중단 · 미사용</b> 상태가 포함된 경우</td><td>현재 사용중단, 미사용 상태 바코드가 포함되어 있습니다.<br>바코드번호 NNNNNN</td></tr>
+        <tr><td>같은 서비스에 <b>동일한 바코드 · 수량 구성</b>이 이미 등록된 경우 (뉴트리원-제휴 제외)</td><td>[서비스명] ERP번호 [ERP번호]<br>동일한 구성으로 이미 등록되어 있습니다.</td></tr>
+      </table>
+      <div class="tip"><b>Tip.</b> 바코드 검색 팝업에서 <b>사용중단·미사용 품목은 선택할 수 없습니다.</b> 동일 구성 안내가 나오면 안내된 ERP번호를 사용하세요. 생성요청 시 담당자(영업관리팀)에게 안내 메일이 자동 작성됩니다. 내용을 확인해 [메일발송]을 누르세요.</div>
+    </div>
+
+    <div class="section-title">자주 하는 실수 체크리스트</div>
+    <div class="faq-box">
+      <div class="q">Q. 바코드 검색이 안 되거나 바코드가 선택되지 않아요.</div>
+      <div class="a">품목관리에서 바코드가 등록되어 있는지 확인하세요. 사용중단·미사용 품목은 선택할 수 없습니다.</div>
+      <div class="q">Q. "동일한 구성으로 이미 등록되어 있습니다" 팝업이 떠요.</div>
+      <div class="a">같은 서비스에서 바코드+수량 구성이 이미 있습니다. 팝업에 나온 ERP번호를 사용하세요. 서비스가 다르면 별도 등록이 가능합니다.</div>
+      <div class="q">Q. 1개입·2개입을 한 번에 등록하면 안 되나요?</div>
+      <div class="a">안 됩니다. ERP 번호 1개는 하나의 출고 구조입니다. 수량별로 각각 ERP번호를 만드세요.</div>
+      <div class="q">Q. 상품명+수량이 이상하게 나와요.</div>
+      <div class="a">자동 조합 결과입니다. 등록 후 수정할 수 있으니 서비스에 맞게 고쳐주세요.</div>
+      <div class="q">Q. 사방넷 품번코드나 ERP번호 항목이 안 보여요.</div>
+      <div class="a">승인여부 N 권한자는 생성요청 단계에서 해당 항목이 보이지 않습니다. 영업관리팀가 생성한 뒤 확인할 수 있습니다.</div>
+    </div>
+
+    <div class="footer-nav">
+      <a href="barcode.html">← 이전 : 품목 관리 - 바코드</a>
+      <a href="erp-mfg.html">다음 : 제조라인 등록 →</a>
+    </div>
+  </div>
+  </body>
+</html>

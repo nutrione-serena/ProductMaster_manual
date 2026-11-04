@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>거래처 관리 | 상품마스터 관리 가이드</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span> 상품마스터 관리 가이드</div>
+    <a class="home-link" href="../index.html">← 전체 목록으로</a>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <span class="tag">01. 거래처 관리</span>
+      <h1>거래처 관리 화면 사용법</h1>
+      <p>제조사와 공급사를 미리 등록하는 화면입니다. 품목을 등록할 때 제조사를 여기서 고르기 때문에, <b>품목 등록보다 먼저</b> 끝내 두어야 합니다.</p>
+      <div class="meta">접속 URL : <a href="https://analytics.nutrione.co.kr/product/client" target="_blank" rel="noopener">https://analytics.nutrione.co.kr/product/client</a></div>
+    </div>
+
+    <div class="notice-box">
+      <b>왜 거래처를 등록하나요?</b> 거래처관리는 <b>제조사의 주소 등 정보를 한 곳에서 관리</b>하기 위한 메뉴입니다. 품목을 등록할 때 제조사를 선택하면 이 정보가 품목고시 등에 자동으로 들어갑니다.
+      <ul>
+        <li>품목 등록에서 <b>제조사 검색이 안 되면</b> → 거래처관리에서 <b>거래처 등록부터</b> 해야 합니다.</li>
+        <li>품목에 나오는 제조사 <b>정보가 없거나 틀리면</b> → 품목이 아니라 <b>거래처관리에서 정보를 수정</b>합니다.</li>
+      </ul>
+    </div>
+
+    <div class="toc">
+      <b>이 페이지에서 확인할 내용</b>
+      <ol>
+        <li>거래처관리 메뉴 찾기와 목록 보기</li>
+        <li>거래처 등록하기</li>
+        <li>자주 하는 실수</li>
+      </ol>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">1</span> 메뉴 찾기와 목록 보기</h2>
+      <p>상단 메뉴 <b>[상품마스터] → [거래처관리]</b>로 이동하면 등록된 거래처 목록을 확인하고 새 거래처를 등록할 수 있습니다.</p>
+      <table>
+        <tr><th>등록일</th><td>거래처를 등록한 기간으로 검색합니다. 기본은 전체입니다.</td></tr>
+        <tr><th>유형</th><td>제조사 / 공급사 / 판매처 / 물류사 중 선택합니다.</td></tr>
+        <tr><th>업체명</th><td>회사명으로 검색합니다.</td></tr>
+      </table>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/supplier_list.png" alt="거래처관리 목록 화면">
+        <div class="cap"><span>목록 우측 위 [등록] 버튼으로 새 거래처를 등록합니다. 거래처번호를 클릭하면 상세 화면이 열립니다.</span></div>
+      </div>
+      <div class="tip"><b>Tip.</b> 새로 등록하기 전에 업체명으로 먼저 검색해 이미 등록된 거래처인지 확인하세요. 같은 업체를 두 번 등록하면 품목 선택 시 헷갈립니다.</div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">2</span> 거래처 등록하기</h2>
+      <p>[등록]을 클릭하면 아래 입력창이 열립니다. <b>유형은 용도에 맞게</b> 고릅니다.</p>
+      <table>
+        <tr><th>제조사</th><td>상품을 만드는 업체입니다. 품목 등록 시 <b>제조업소/생산자</b>로 선택됩니다.</td></tr>
+        <tr><th>공급사</th><td>원료를 들여오는 업체입니다(원료 수입 등).</td></tr>
+        <tr><th>필수 항목(*)</th><td><b>거래처명(회사명), 거래처 유형, 주소/제조사 소재지(국문), 주소/제조사 소재지(영문)</b> 4개입니다. 하나라도 비어 있으면 저장되지 않습니다.</td></tr>
+        <tr><th>선택 항목</th><td>사업자번호(숫자만, '-' 없이), 대표자, 업태, 종목, 대표 전화번호, 대표 이메일</td></tr>
+      </table>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/supplier_form.png" alt="거래처 등록 화면">
+        <div class="cap"><span>별표(*)가 붙은 항목은 꼭 입력해야 합니다.</span></div>
+      </div>
+      <div class="warn"><b>주소/제조사 소재지 입력 시 주의.</b> 제조사는 품목고시와 해외팀 업무에 그대로 쓰이므로 <b>정확하게</b> 입력하세요. 공급사는 <b>수입 국가</b>를 기재합니다. 품목 상세의 소재지 정보는 이 값을 자동으로 가져오므로, 바꿔야 하면 품목이 아니라 <b>거래처관리에서 수정</b>하세요.</div>
+    </div>
+
+    <div class="section-title">자주 하는 실수 체크리스트</div>
+    <div class="faq-box">
+      <div class="q">Q. 품목 등록에서 제조사 목록에 업체가 안 보여요.</div>
+      <div class="a">거래처관리에 제조사 <b>유형</b>으로 등록되어 있는지 확인하세요. 공급사 유형으로만 등록되었다면 거래처 상세에서 유형을 바꾸거나 제조사로 다시 등록해야 합니다. 품목 상세의 제조사는 제조사·공급사 유형 등록 건에서만 다중 선택됩니다.</div>
+      <div class="q">Q. 등록 버튼을 눌러도 다음으로 안 넘어가요.</div>
+      <div class="a">필수 항목 4개(거래처명, 유형, 소재지 국문·영문) 중 비어 있는 곳이 있습니다. 영문 소재지를 빼먹는 경우가 많습니다.</div>
+    </div>
+
+    <div class="footer-nav">
+      <a href="../index.html">← 전체 목록</a>
+      <a href="item.html">다음 : 품목 관리 →</a>
+    </div>
+  </div>
+</body>
+</html>

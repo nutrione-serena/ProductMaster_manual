@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>품목 관리 | 상품마스터 관리 가이드</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span> 상품마스터 관리 가이드</div>
+    <a class="home-link" href="../index.html">← 전체 목록으로</a>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <span class="tag">02. 품목 관리</span>
+      <h1>품목 관리 화면 사용법 (목록 · 품목정보 · 이미지 · 변경내역)</h1>
+      <p>품목(상품·부자재·원료)의 기본 정보를 등록하고 관리하는 화면입니다. 품목 하나 아래에 바코드를 여러 개 둘 수 있고, 이 구조를 이해하는 것이 가장 중요합니다.</p>
+      <div class="meta">접속 URL : <a href="https://analytics.nutrione.co.kr/product/product" target="_blank" rel="noopener">https://analytics.nutrione.co.kr/product/product</a></div>
+    </div>
+
+    <div class="toc">
+      <b>이 페이지에서 확인할 내용</b>
+      <ol>
+        <li>품목 · 바코드 · ERP 구조 이해하기</li>
+        <li>품목 목록 검색과 등록 방법</li>
+        <li>품목정보(기본정보/품목고시) 입력</li>
+        <li>이미지/동영상 등록</li>
+        <li>변경내역 확인</li>
+        <li>자주 하는 실수</li>
+      </ol>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">1</span> 품목 · 바코드 · ERP 구조 이해하기</h2>
+      <p>상품마스터의 모든 정보는 <b>품목 → 바코드 → ERP번호</b> 순서의 부모-자식 관계로 연결됩니다. 가장 위가 품목이고, 그 아래에 바코드, 그 아래에 ERP번호가 붙습니다.</p>
+      <div class="flow">
+        <span class="node">품목번호<br><small>최상위 · 예) 1300001</small></span><span class="arrow">→</span>
+        <span class="node">바코드<br><small>품목 하위</small></span><span class="arrow">→</span>
+        <span class="node now">ERP번호<br><small>바코드 하위(출고 기준)</small></span>
+      </div>
+      <table>
+        <tr><th>품목번호</th><td>제조사·규격 등 <b>상품의 기본 정보</b>를 관리하는 단위입니다.</td></tr>
+        <tr><th>바코드</th><td>품목 아래에서 포장·규격별로 구분되는 단위입니다.</td></tr>
+        <tr><th>ERP번호</th><td>바코드를 조합해 만드는 <b>출고 기준</b>입니다. 규격 · 포장별 / 개월수별 출고 수량 기준 또는 채널별 출고 기준으로 나뉩니다.</td></tr>
+      </table>
+
+      <div class="caution"><b>가장 중요한 품목 등록 기준</b>
+        <ul>
+          <li>품목의 <b>제조사, 규격 등 품목 정보가 하나라도 달라서 별도로 관리해야 하는 경우</b>에는 반드시 <b>품목번호를 개별로 구분해서 등록</b>해야 합니다.</li>
+          <li>반대로 <b>품목 관리가 아니라 출고를 위한 항목</b>이거나 별도 품목 정보를 관리할 필요가 없는 항목은, <b>품목번호를 1개만 만들어 두고 그 아래 바코드로만 관리</b>하는 것을 권장합니다.</li>
+        </ul>
+        <p style="margin:8px 0 0"><b>예시</b> : NRM본부가 매입 관리하는 <b>부자재</b>는 별도 정보 관리가 필요하지 않아, 품목번호 <b>1600001</b> 1개 아래에 모든 부자재가 바코드로만 구분되어 관리됩니다. 실제 구조는 품목번호 1600001을 조회해 샘플로 확인하세요. 단, 품목정보 값 중 <b>하나라도 달라서 별도 관리가 필요하면</b> 품목번호를 따로 등록해야 합니다.</p>
+      </div>
+      <div class="tip"><b>삭제가 필요하면?</b> 품목·바코드는 ERP와 연결될 수 있어 <b>삭제 기능을 일부러 제공하지 않습니다.</b> 삭제가 필요하면 IT솔루션팀에 문의하세요.</div>
+      <div class="tip"><b>바코드·ERP 자동 생성.</b> 품목 등록 시 <b>부자재, 원료</b>에 한해 바코드와 ERP번호를 <b>자동 생성</b>하는 기능이 있습니다. 등록자가 <b>자동 또는 수동 생성 중에서 선택</b>할 수 있습니다.</div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">2</span> 품목 목록 검색과 등록</h2>
+      <p>상단 메뉴 <b>[상품마스터] → [품목관리]</b>로 들어갑니다. 처음 접속하면 기본 조회가 되어 있지 않으니 <b>검색 조건을 고르고 [검색]</b>을 눌러야 합니다. 조건을 여러 개 선택하면 모두 만족하는 결과만 나옵니다.</p>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/item_list.png" alt="품목관리 목록 화면">
+        <div class="cap"><span>서비스, 품목분류, 검색어(바코드/ERP/품목번호), 제품명·상품명, 브랜드, 매출카테고리 등으로 검색합니다.</span></div>
+      </div>
+      <table>
+        <tr><th>전체 / 품목 / 바코드 탭</th><td>기본은 전체 항목 기준입니다. <b>[품목]</b>을 누르면 품목 기준 값만, <b>[바코드]</b>를 누르면 바코드 기준 값만 목록에 나옵니다.</td></tr>
+        <tr><th>[파일등록 샘플다운]</th><td>업체에서 받은 파일로 품목을 한꺼번에 등록할 때 씁니다. 품목고시유형을 고르면 <b>해당 품목고시 기준 샘플파일</b>을 내려받을 수 있습니다. 샘플은 <b>행·열을 삭제하거나 항목 이름을 고치지 말고 값만</b> 입력하세요.</td></tr>
+        <tr><th>[파일등록]</th><td>작성한 파일을 올릴 때 서비스를 선택해 등록합니다. 샘플 양식에서 행/열을 지운 경우 등록되지 않습니다.</td></tr>
+        <tr><th>[등록]</th><td>관리자 화면에서 품목을 한 건씩 등록합니다.</td></tr>
+        <tr><th>[목록 다운로드]</th><td>검색 결과를 엑셀로 내려받습니다.</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">3</span> 품목정보(기본정보/품목고시) 입력</h2>
+      <p>품목 상세 창이 열리면 처음에는 <b>[기본정보/품목고시]</b> 탭만 보입니다. 저장해서 품목 등록이 끝나면 <b>[이미지/동영상] [바코드/입고] [변경내역]</b> 탭이 나타납니다.</p>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/item_detail_top.png" alt="품목 상세 - 기본정보">
+        <div class="cap"><span>서비스 → 품목 분류 → 브랜드 → 상품군(매출카테고리) → 제품명 순으로 입력합니다. 선택한 품목분류와 품목고시유형에 따라 필수 항목이 달라집니다.</span></div>
+      </div>
+      <table>
+        <tr><th>필수 표시(*)</th><td>별(*) 항목은 입력하지 않으면 저장할 수 없습니다.</td></tr>
+        <tr><th>상품군(USP)</th><td>여러 개 선택할 수 있습니다. 목록에 없는 상품군이 필요하면 추가를 요청하세요.</td></tr>
+        <tr><th>제조업소/생산자</th><td>거래처관리에 등록한 <b>제조사·공급사</b> 중에서만 고르며 여러 개 선택할 수 있습니다.</td></tr>
+        <tr><th>제조사/생산자 소재지</th><td>위에서 고른 제조업소 기준으로 <b>자동 입력</b>됩니다. 바꿔야 하면 거래처관리의 정보를 수정하세요.</td></tr>
+        <tr><th>특이사항</th><td>인증서관리에 등록된 <b>유효기간 만료 전, 사용 상태의 인증서</b>가 대상 품목 기준으로 특이사항에 <b>함께 노출</b>됩니다. 그 밖의 사항은 품목별로 직접 추가 기재합니다.</td></tr>
+        <tr><th>제품관련자료</th><td>자료 종류별(품목제조보고서, COA, Flow Chart, MSDS 등)로 <b>등록 항목이 구분</b>되어 있습니다. 각 항목 기준으로 <b>영문 · 국문 · 기타 서류</b>를 등록할 수 있습니다.</td></tr>
+        <tr><th>추가서류</th><td><b>제품관련자료 항목에 해당하지 않는 기타 서류</b>를 등록하는 곳입니다. 별도 등록이 아니라 NAS로 관리하는 서류라면 [추가]를 눌러 경로를 입력합니다.</td></tr>
+      </table>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/item_detail_docs.png" alt="품목 상세 - 서류 등록">
+        <div class="cap"><span>화면 아래쪽에는 품목제조보고서, COA, Flow Chart, MSDS 등 서류 등록 영역이 있습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">4</span> 이미지/동영상 등록</h2>
+      <div class="caution"><b>꼭 NAS 경로로 등록하세요.</b> 이미지를 수정할 때 경로를 <b>전산화</b>해야 하므로 반드시 전산에 경로를 등록합니다. 전산에 등록하면 변경 사항 기준으로 <b>메일 양식이 자동 완성</b>되고, 메일에서 내용을 직접 고쳐 발송할 수 있습니다. 메일을 못 보냈다면 이미지/동영상 팝업 아래 <b>[메일발송]</b>을 누르면 현재 등록 정보 기준으로 메일 양식이 나옵니다.</div>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/item_image.png" alt="품목 상세 - 이미지/동영상">
+        <div class="cap"><span>썸네일 · 상품상세 · 동영상 경로는 [추가]를 눌러 유통채널별 NAS 경로를 입력합니다.</span></div>
+      </div>
+      <table>
+        <tr><th>썸네일 / 상품상세 / 동영상 경로</th><td>[추가] 클릭 후 항목별 이미지 NAS 경로를 입력합니다. 수정 후 저장하면 메일 발송 안내가 나오며 <b>발송 여부를 직접 선택</b>합니다.</td></tr>
+        <tr><th>QR 이미지 / 패키지 앞 이미지</th><td>영업관리 선택 관리 항목입니다. 필요하면 <b>영업관리팀</b>에 메일 및 메신저로 등록을 요청하세요(용량 최대 2MB, gif/png/jpg).</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <h2><span class="step-no">5</span> 변경내역 확인</h2>
+      <p>기본정보·이미지/동영상·바코드/입고의 정보를 바꾸면 <b>변경 전 → 변경 후</b> 내용이 이 탭에 남습니다. <b>최초 등록 때는 표시되지 않고</b>, 등록 이후 수정할 때부터 쌓입니다.</p>
+      <div class="tip"><b>사유 남기기.</b> 변경 이력의 <b>비고</b>에서 <b>[사유추가]</b> 버튼을 누르면, 모든 담당자에게 <b>공유가 필요한 내용</b>을 사유로 기재할 수 있습니다.</div>
+      <div class="shot">
+        <img class="has-cap" src="../assets/img/item_history.png" alt="품목 상세 - 변경내역">
+        <div class="cap"><span>변경일 기간으로 조회합니다. 변경항목·변경 전/후 내용·수정자를 확인할 수 있습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">자주 하는 실수 체크리스트</div>
+    <div class="faq-box">
+      <div class="q">Q. 잘못 등록한 품목·바코드는 어떻게 삭제하나요?</div>
+      <div class="a">삭제 기능은 ERP와 연관될 수 있어 일부러 만들지 않았습니다. 삭제가 필요한 경우 <b>IT솔루션팀에 문의</b>하세요.</div>
+      <div class="q">Q. 품목을 등록했는데 바코드/이미지 탭이 안 보여요.</div>
+      <div class="a">최초 등록 화면에서는 [기본정보/품목고시]만 보입니다. 저장해 품목 등록을 완료하면 나머지 탭이 생깁니다.</div>
+      <div class="q">Q. 품목 상세에서 제조사 소재지가 이상해요.</div>
+      <div class="a">소재지는 거래처관리 정보에서 자동으로 가져옵니다. 품목이 아니라 거래처관리에서 수정하세요.</div>
+      <div class="q">Q. 파일등록이 안 돼요.</div>
+      <div class="a">샘플 양식에서 행/열을 삭제했거나 항목 이름을 바꿨는지 확인하세요. 샘플은 값만 입력해야 합니다.</div>
+      <div class="q">Q. 이미지를 바꿨는데 메일이 안 갔어요.</div>
+      <div class="a">저장할 때 나오는 메일 발송 안내에서 취소를 눌렀을 수 있습니다. 이미지/동영상 팝업 아래 [메일발송]을 눌러 다시 보내세요.</div>
+    </div>
+
+    <div class="footer-nav">
+      <a href="supplier.html">← 이전 : 거래처 관리</a>
+      <a href="barcode.html">다음 : 품목 관리 - 바코드 →</a>
+    </div>
+  </div>
+</body>
+</html>
